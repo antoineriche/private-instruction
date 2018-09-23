@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Pupil Form</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="pupilForm">
+
+    <!-- General informations -->
+    <ion-card>
+
+        <ion-item>
+          <ion-label position="fixed" color="primary">First name</ion-label>
+          <ion-input type="text" formControlName="firstname"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="fixed" color="primary">Last name</ion-label>
+          <ion-input type="text" formControlName="lastname"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label color="primary">Gender</ion-label>
+          <ion-select formControlName="gender">
+            <ion-select-option value="female">Female</ion-select-option>
+            <ion-select-option value="male">Male</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label color="primary">Class level</ion-label>
+          <ion-select formControlName="classLevel">
+            <ion-select-option *ngFor="let class of classLevels" value="{{class}}">{{class}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+    </ion-card>
+
+    <!-- Coordinates -->
+    <ion-card>
+
+      <ion-item>
+        <ion-label position="stacked" color="primary">Place</ion-label>
+        <ion-input id="place" type="text" formControlName="place"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="fixed" color="primary">Phone</ion-label>
+        <ion-input type="tel" formControlName="phone"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="fixed" color="primary">Parent phone</ion-label>
+        <ion-input type="tel" formControlName="parentPhone"></ion-input>
+      </ion-item>
+
+    </ion-card>
+
+    <!-- Hourly Price -->
+    <ion-card>
+
+      <ion-item>
+        <ion-label position="fixed" color="primary">Hourly price</ion-label>
+        <ion-input type="number" formControlName="hourlyPrice"></ion-input>
+      </ion-item>
+
+    </ion-card>
+
+    <ion-button shape="round" color="primary" expand="block" [disabled]="!pupilForm.valid" (click)="saveInfo()" padding>Save</ion-button>
+  </form>
+</ion-content>

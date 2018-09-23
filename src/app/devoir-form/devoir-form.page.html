@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Devoir Form</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="devoirForm">
+
+    <ion-card>
+
+      <ion-item>
+        <ion-label color="primary">Pupil</ion-label>
+        <ion-select formControlName="pupilId">
+          <ion-select-option *ngFor="let pupil of pupils" value="{{pupil.key}}">{{pupil.firstname}} {{pupil.lastname}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="primary">Date</ion-label>
+        <ion-datetime display-format="DD MM YYYY" placeholder="Select Date" formControlName="day"></ion-datetime>
+      </ion-item>
+
+    </ion-card>
+
+    <!-- Chapter -->
+    <ion-card>
+
+      <ion-item>
+        <ion-label position="fixed" color="primary">Chapter</ion-label>
+        <ion-input type="text" formControlName="chapter" autocapitalize="sentences"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="fixed" color="primary">Comment</ion-label>
+        <ion-input type="text" formControlName="comment" autocapitalize="sentences"></ion-input>
+      </ion-item>
+
+    </ion-card>
+
+    <!-- Notation -->
+    <ion-card>
+
+      <ion-item>
+        <ion-label position="fixed" color="primary">Mark</ion-label>
+        <ion-input type="number" min="0" formControlName="mark"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="fixed" color="primary">Max mark</ion-label>
+        <ion-input type="number" min="0" formControlName="maxMark"></ion-input>
+      </ion-item>
+
+    </ion-card>
+
+    <ion-button shape="round" color="primary" expand="block" [disabled]="!devoirForm.valid" (click)="saveDevoir()" padding>Save</ion-button>
+  </form>
+
+</ion-content>

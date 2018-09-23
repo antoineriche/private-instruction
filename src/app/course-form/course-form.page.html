@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Course Form</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="courseForm">
+
+    <ion-card>
+
+      <ion-item>
+        <ion-label color="primary">Pupil</ion-label>
+        <ion-select formControlName="pupilId">
+          <ion-select-option *ngFor="let pupil of pupils" value="{{pupil.key}}">{{pupil.firstname}} {{pupil.lastname}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="primary">Date</ion-label>
+        <ion-datetime display-format="DD MM YYYY" placeholder="Select Date" formControlName="day"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="primary">Hour</ion-label>
+        <ion-datetime display-format="HH:mm" placeholder="Select Hour" formControlName="hour"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="primary">Duration</ion-label>
+        <ion-select formControlName="duration">
+          <ion-select-option value="60">1h</ion-select-option>
+          <ion-select-option value="90">1h30</ion-select-option>
+          <ion-select-option value="120">2h</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+    </ion-card>
+
+
+    <!-- Hourly Price -->
+    <ion-card>
+
+      <ion-item>
+        <ion-label position="fixed" color="primary">Money</ion-label>
+        <ion-input type="number" formControlName="money"></ion-input>
+      </ion-item>
+
+    </ion-card>
+
+    <!-- Chapter -->
+    <ion-card>
+
+      <ion-item>
+        <ion-label position="fixed" color="primary">Chapter</ion-label>
+        <ion-input type="text" formControlName="chapter" autocapitalize="sentences"></ion-input>
+      </ion-item>
+
+    </ion-card>
+
+    <!-- Comment -->
+    <ion-card *ngIf="isEditing">
+
+      <ion-item>
+        <ion-label position="fixed" color="primary" min="0" max="5" step="1">Rate</ion-label>
+        <rating formControlName="rating" readOnly="false" max="5" nullable="true"
+            emptyStarIconName="star-outline" halfStarIconName="star-half" starIconName="star">
+        </rating>
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="primary" position="fixed">Comment</ion-label>
+        <ion-textarea formControlName="comment" placeholder="Enter a comment" autocapitalize="sentences"></ion-textarea>
+      </ion-item>
+
+    </ion-card>
+
+    <ion-button shape="round" color="primary" expand="block" [disabled]="!courseForm.valid" (click)="saveCourse()" padding>Save</ion-button>
+
+  </form>
+
+</ion-content>

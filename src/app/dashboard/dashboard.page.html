@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Dashboard</ion-title>
+    <ion-buttons slot="end">
+      <ion-spinner *ngIf="load" color="warning" name="bubbles"></ion-spinner>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- NEXT COURSE -->
+  <ion-card>
+
+    <ion-item *ngIf="nextCourse">
+      <ion-item *ngIf="nextCourseCountDown" slot="end">
+        <ion-icon slot="end" name="time"></ion-icon>
+        <ion-label>
+          <p>{{formatCountDown(this.nextCourseCountDown)}}</p>
+        </ion-label>
+      </ion-item>
+      <ion-label text-wrap>
+        <ion-text color="primary">
+          <h1>Next course</h1>
+        </ion-text>
+        <p>{{nextCourse.date | date:'E. dd MMM, y'}}</p>
+        <p>{{nextCourse.pupil ? pupilUtils.getFullName(nextCourse.pupil) : nextCourse.pupilId}}</p>
+      </ion-label>
+    </ion-item>
+
+  </ion-card>
+
+  <!-- UNCOMPLETE COURSES -->
+  <ion-card>
+
+    <ion-item *ngIf="uncompleteCourses">
+      <ion-button fill="" slot="end" (click)="toggleUncompleteCourses()">
+        <ion-icon slot="icon-only" name="more" color="warning"></ion-icon>
+      </ion-button>
+      <ion-label text-wrap>
+        <ion-text color="primary">
+          <h1>{{uncompleteCourses.length}} uncomplete courses</h1>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+    <div *ngIf="uncompleteCourseVisible">
+      <ion-card-content>
+        <ion-list lines="full">
+          <ion-item *ngFor="let course of uncompleteCourses" routerLink="/course-detail/{{course.key}}">
+            <ion-label *ngIf="course.pupil">
+              <p>{{course.date | date:'E. dd MMM, y'}} x {{pupilUtils.getFullName(course.pupil)}}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </div>
+
+  </ion-card>
+
+</ion-content>

@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Pupil Details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button ion-button icon-only (click)="presentActionSheet()">
+        <ion-icon name="more"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card *ngIf="pupil">
+
+    <ion-card-header>
+      <ion-card-title>{{pupil.firstname}} {{pupil.lastname}}</ion-card-title>
+    </ion-card-header>
+
+    <ion-item>
+      <ion-label position="fixed" color="primary">Class level</ion-label>
+      {{pupil.classLevel}}
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="fixed" color="primary">Courses count</ion-label>
+      {{courseCounter}}
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="fixed" color="primary">Devoirs count</ion-label>
+      {{devoirCounter}}
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="fixed" color="primary">Hourly price</ion-label>
+      {{pupil.hourlyPrice}} €
+    </ion-item>
+  </ion-card>
+
+  <ion-card *ngIf="pupil">
+    <ion-item>
+      <ion-label position="fixed" color="primary">Address</ion-label>
+      {{pupil.place.address}}
+      <ion-icon name="globe" color="primary" slot="end"></ion-icon>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="fixed" color="primary">Phone</ion-label>
+      {{pupil.phone}}
+      <ion-icon name="call" color="warning" slot="end"></ion-icon>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="fixed" color="primary">Parent phone</ion-label>
+      {{pupil.parentPhone}}
+      <ion-icon name="call" color="warning" slot="end"></ion-icon>
+    </ion-item>
+  </ion-card>
+
+  <!-- Map -->
+  <ion-card>
+    <div #map id="map" [hidden]="!pupil"></div>
+    <ion-item>
+      <ion-label position="fixed" color="primary">Distance</ion-label> {{distance}} km
+    </ion-item>
+  </ion-card>
+
+</ion-content>

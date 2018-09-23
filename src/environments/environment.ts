@@ -6,6 +6,14 @@ export const environment = {
   production: false
 };
 
+export const firebaseConfig = {
+  apiKey: 'AIzaSyDciqXgvwkIq_NWzp08z99or224EJagC5E',
+  authDomain: "pifirebaseproject-da97d.firebaseapp.com",
+  databaseURL: "https://pifirebaseproject-da97d.firebaseio.com",
+  projectId: "pifirebaseproject-da97d",
+  storageBucket: "pifirebaseproject-da97d.appspot.com",
+};
+
 /*
  * In development mode, to ignore zone related error stack frames such as
  * `zone.run`, `zoneDelegate.invokeTask` for easier debugging, you can

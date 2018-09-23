@@ -1,0 +1,81 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Week</ion-title>
+    <ion-buttons slot="end">
+      <ion-spinner *ngIf="load" color="warning" name="bubbles"></ion-spinner>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<div class="bar bar-header" class="primary-bckg">
+
+  <ion-grid no-padding>
+    <ion-row align-items-center class="primary-bckg">
+      <ion-col size="2">
+        <ion-button (click)="lastWeek()" expand="full">
+          <ion-icon slot="icon-only" name="arrow-dropleft-circle"></ion-icon>
+        </ion-button>
+      </ion-col>
+
+      <ion-col size="3">
+        <ion-button expand="full" fill="outline">
+          <ion-icon name="book" color="warning" slot="start"></ion-icon>
+          <div style="color: #fff;">{{courseCounter ? courseCounter : 0}}</div>
+        </ion-button>
+      </ion-col>
+
+      <ion-col size="2">
+        <ion-button (click)="thisWeek()" expand="full">
+          <ion-icon slot="icon-only" name="calendar"></ion-icon>
+        </ion-button>
+      </ion-col>
+
+      <ion-col size="3">
+        <ion-button expand="full" fill="outline">
+          <ion-icon name="logo-euro" color="warning" slot="end"></ion-icon>
+          <div style="color: #fff;">{{moneyCounter ? moneyCounter : 0}}</div>
+        </ion-button>
+      </ion-col>
+
+      <ion-col size="2">
+        <ion-button (click)="nextWeek()" expand="full">
+          <ion-icon slot="icon-only" name="arrow-dropright-circle"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</div>
+
+<ion-content class="has-header">
+
+  <ion-card *ngFor="let day of days">
+    <ion-item>
+
+      <ion-badge color="warning" slot="end" *ngIf="day.courses && day.courses.length > 0">
+        {{day.courses.length}}
+      </ion-badge>
+
+      <ion-button fill="" slot="end" (click)="toggleDetails(day)">
+        <ion-icon slot="icon-only" name="more" *ngIf="day.courses && day.courses.length > 0"></ion-icon>
+      </ion-button>
+
+      <ion-label color="{{day.today ? 'primary' : ''}}">{{day.label}}</ion-label>
+    </ion-item>
+    <div *ngIf="day.courses && day.details">
+      <ion-card-content *ngIf="day.courses.length > 0">
+        <ion-list lines="full">
+          <ion-item *ngFor="let course of day.courses" routerLink="/course-detail/{{course.key}}" align-items-center>
+            <ion-label *ngIf="course.pupil">
+              <p>{{courseUtils.getFriendlyTime(course.date, course.duration)}} x {{pupilUtils.getFullName(course.pupil)}}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </div>
+  </ion-card>
+
+</ion-content>

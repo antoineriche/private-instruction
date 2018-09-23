@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Devoir Details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button ion-button icon-only (click)="presentActionSheet()">
+        <ion-icon name="more"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card *ngIf="devoir">
+
+    <ion-item>
+      <ion-card-header>
+        <ion-card-subtitle>{{devoir.date | date:'E. dd MMM, y'}}</ion-card-subtitle>
+        <ion-card-title>{{devoir.chapter}}</ion-card-title>
+      </ion-card-header>
+      <ion-icon name="{{devoirUtils.iconFromStatus(devoir.status)[0]}}" color="{{devoirUtils.iconFromStatus(devoir.status)[1]}}" slot="end"></ion-icon>
+    </ion-item>
+
+  </ion-card>
+
+  <ion-card *ngIf="devoir">
+    <ion-item>
+      <ion-label position="fixed" color="primary">Pupil</ion-label>
+      {{devoir.pupil != undefined ? pupilUtils.getFullName(devoir.pupil) : devoir.pupilId}}
+    </ion-item>
+  </ion-card>
+
+  <ion-card *ngIf="devoir">
+    <ion-item>
+      <ion-label position="fixed" color="primary">Mark</ion-label>
+      {{devoir.mark}} / {{devoir.maxMark}}
+    </ion-item>
+  </ion-card>
+
+  <ion-card *ngIf="devoir">
+
+    <ion-item>
+      <ion-label position="fixed" color="primary">Comment</ion-label>
+      {{devoir.comment}}
+    </ion-item>
+  </ion-card>
+
+</ion-content>

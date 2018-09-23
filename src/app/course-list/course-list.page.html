@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Course List</ion-title>
+    <ion-buttons slot="end">
+      <ion-spinner *ngIf="load" color="warning" name="bubbles"></ion-spinner>
+      <ion-button ion-button icon-only (click)="this.showFilters = !this.showFilters" *ngIf="!load">
+        <ion-icon name="funnel"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<div *ngIf="showFilters" class="bar bar-header">
+  <ion-grid no-padding>
+    <ion-row align-items-center class="primary-bckg">
+      <ion-col size="10">
+        <ion-item>
+          <ion-label color="warning">Sort by</ion-label>
+          <ion-select [(ngModel)]="sortCriteria" (ngModelChange)="sortCourses($event)">
+            <ion-select-option value="date">Date</ion-select-option>
+            <ion-select-option value="courseStatus">Status</ion-select-option>
+            <ion-select-option value="paymentStatus">Payment</ion-select-option>
+            <ion-select-option value="duration">Duration</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size="2">
+        <ion-button icon-only (click)="reverseList()">
+          <ion-icon name="{{sortOrderIcon}}" color="warning"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
+
+<ion-content class="has-header">
+
+  <ion-list lines="full">
+    <ion-item *ngFor="let course of courses" routerLink="/course-detail/{{course.key}}" align-items-center>
+      <ion-icon name="person" slot="start"></ion-icon>
+      <ion-icon name="{{courseStatusUI(course.courseStatus)[0]}}" color="{{courseStatusUI(course.courseStatus)[1]}}" slot="end"></ion-icon>
+      <ion-label>
+        <h2>{{course.pupil ? pupilUtils.getFullName(course.pupil) : course.pupilId}}</h2>
+        <h3>{{course.date | date:'E. dd MMM, y'}}</h3>
+        <p>{{courseUtils.getFriendlyTime(course.date, course.duration)}}</p>
+        <!-- <p>{{courseUtils.getPaymentStatus(course.paymentStatus)}}</p> -->
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/course-form">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

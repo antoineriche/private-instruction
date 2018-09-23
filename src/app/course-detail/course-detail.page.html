@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Course Details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button ion-button icon-only (click)="presentActionSheet()">
+        <ion-icon name="more"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div *ngIf="course">
+
+    <ion-card>
+      <ion-item>
+        <ion-card-header>
+          <ion-card-subtitle>{{course.date | date:'E. dd MMM, y'}}, {{course.date | date:'shortTime'}}</ion-card-subtitle>
+          <ion-card-title>{{courseUtils.getFriendlyTime(course.date, course.duration)}}</ion-card-title>
+        </ion-card-header>
+        <ion-icon name="{{courseUtils.iconFromStatus(course.courseStatus)[0]}}" color="{{courseUtils.iconFromStatus(course.courseStatus)[1]}}" slot="end"></ion-icon>
+      </ion-item>
+    </ion-card>
+
+    <ion-card *ngIf="course.pupil">
+      <ion-item>
+        <ion-label color="primary">Pupil</ion-label>
+        {{pupilUtils.getFullName(course.pupil)}}
+      </ion-item>
+    </ion-card>
+
+    <ion-card>
+      <ion-item>
+        <ion-label color="primary">Money</ion-label>
+        {{course.money}} €
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="primary">Payment status</ion-label>
+        {{courseUtils.getPaymentStatus(course.paymentStatus)}}
+      </ion-item>
+    </ion-card>
+
+    <ion-card>
+      <ion-item>
+        <ion-label color="primary">Chapter</ion-label>
+        {{course.chapter}}
+      </ion-item>
+    </ion-card>
+
+    <ion-card>
+      <ion-item>
+        <ion-label color="primary">Rating</ion-label>
+        <rating [(ngModel)]="course.rate" readOnly="true" max="5" nullable="true"
+            emptyStarIconName="star-outline" halfStarIconName="star-half" starIconName="star">
+        </rating>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="fixed" color="primary">Comment</ion-label>
+        {{course.comment}}
+      </ion-item>
+    </ion-card>
+
+  </div>
+
+</ion-content>
