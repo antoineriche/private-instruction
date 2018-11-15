@@ -19,16 +19,20 @@ import { PopoverPage } from './popover/popover.page';
 
 import { firebaseConfig } from '../environments/environment';
 
-//MAP
+import { TestodalPageModule } from './testodal/testodal.module';
+import { PlotlyModule } from 'angular-plotly.js';
+
 
 @NgModule({
   declarations: [AppComponent, PopoverPage],
   imports: [BrowserModule,
+    PlotlyModule,
     CommonModule,
     ReactiveFormsModule,
     IonicModule.forRoot(),
     AppRoutingModule,
     AngularFireModule.initializeApp(firebaseConfig),
+    TestodalPageModule,
     AngularFireDatabaseModule, // for database
   ],
   entryComponents: [

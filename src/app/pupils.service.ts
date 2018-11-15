@@ -80,9 +80,9 @@ export class PupilsService {
   removeDevoirForPupil(pupilId: string, devoirId: string){
     return this.ref.child(pupilId).once('value', (s) => {
       var pupil = s.val();
-      var devoirIds = pupil.devoirIds != undefined ? pupil.devoirIds : {};
-      delete devoirIds[devoirId];
-      this.ref.child(pupilId).child('devoirsId').set(devoirIds);
+      var devoirsId = pupil.devoirsId != undefined ? pupil.devoirsId : {};
+      delete devoirsId[devoirId];
+      this.ref.child(pupilId).child('devoirsId').set(devoirsId);
     });
   }
 

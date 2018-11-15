@@ -107,7 +107,8 @@ export class DevoirDetailPage implements OnInit {
   ngOnInit() {
     this.devoirKey = this.route.snapshot.paramMap.get('key');
     this.devoirService.getDevoir(this.devoirKey,
-      (devoir) => { this.devoir = devoir; }
+      (devoir) => { this.devoir = devoir; },
+      true
     );
   }
 

@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Course, CourseUtils } from '../beans/course';
+import { Devoir } from '../beans/devoir';
 import { PupilUtils } from '../beans/pupil';
 import { CourseService } from '../course.service';
+import { DevoirService } from '../devoir.service';
 
 import { interval } from 'rxjs';
-import { map } from 'rxjs/operators'
+
 
 @Component({
   selector: 'app-dashboard',
@@ -15,12 +17,14 @@ import { map } from 'rxjs/operators'
 export class DashboardPage implements OnInit {
 
   nextCourse: Course;
+  nextDevoir: Devoir;
   nextCourseCountDown: any;
   uncompleteCourses: Course[];
   uncompleteCourseVisible: boolean;
   load: boolean;
 
-  constructor(public courseService: CourseService, public courseUtils: CourseUtils, public pupilUtils: PupilUtils) {
+  constructor(public courseService: CourseService, public courseUtils: CourseUtils, public pupilUtils: PupilUtils,
+    public devoirService: DevoirService) {
     this.uncompleteCourseVisible = false;
   }
 
@@ -46,7 +50,7 @@ export class DashboardPage implements OnInit {
     this.uncompleteCourseVisible = !this.uncompleteCourseVisible;
   }
 
-  getNextCourse () {
+  getNextCourse() {
     this.load = true;
     return this.courseService.getNextCourse(
       itm => {
@@ -61,6 +65,15 @@ export class DashboardPage implements OnInit {
       });
   }
 
+  getNextDevoir(){
+    this.load = true;
+    return this.devoirService.getNextDevoir(
+      itm => {
+        this.load = false;
+        this.nextDevoir = itm;
+      });
+  }
+
   getUncommpleteCourses(){
     return this.courseService.getCoursesWithStatus(0,
       itm => {
@@ -70,6 +83,7 @@ export class DashboardPage implements OnInit {
 
   ngOnInit() {
     this.getNextCourse();
+    this.getNextDevoir();
     this.getUncommpleteCourses();
   }
 

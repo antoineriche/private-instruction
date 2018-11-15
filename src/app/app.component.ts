@@ -27,9 +27,9 @@ export class AppComponent {
     { title: 'Pupils', url: '/pupil-list', icon: 'people' },
     { title: 'Courses', url: '/course-list', icon: 'book' },
     { title: 'Devoirs', url: '/devoir-list', icon: 'clipboard' },
-    { title: 'Evolution', url: '/course-list', icon: 'stats' },
+    { title: 'Evolution', url: '/evolution', icon: 'stats' },
     { title: 'Profile', url: '/course-list', icon: 'person' },
-    { title: 'Bilan', url: '/course-list', icon: 'archive' },
+    { title: 'Bilan', url: '/bilan', icon: 'archive' },
   ];
 
   constructor(

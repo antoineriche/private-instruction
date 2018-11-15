@@ -19,6 +19,9 @@ const routes: Routes = [
   { path: 'devoir-form', loadChildren: './devoir-form/devoir-form.module#DevoirFormPageModule' },
   { path: 'devoir-form/:key', loadChildren: './devoir-form/devoir-form.module#DevoirFormPageModule' },
   { path: 'devoir-detail/:key', loadChildren: './devoir-detail/devoir-detail.module#DevoirDetailPageModule' },
+  { path: 'testodal', loadChildren: './testodal/testodal.module#TestodalPageModule' },
+  { path: 'bilan', loadChildren: './bilan/bilan.module#BilanPageModule' },
+  { path: 'evolution', loadChildren: './evolution/evolution.module#EvolutionPageModule' },
 ];
 
 @NgModule({

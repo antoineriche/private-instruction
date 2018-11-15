@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{this.pupil.firstname}}'s place</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <div #map id="map"></div>
+
+  <ion-card>
+    <ion-item>
+      <ion-label position="fixed" color="primary">Address</ion-label> {{pupil.place.address}}
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed" color="primary">Distance</ion-label> {{distance}} km
+    </ion-item>
+  </ion-card>
+
+  <ion-button ion-button icon-only expand="block" (click)="closeModal()">
+    BACK
+  </ion-button>
+</ion-content>

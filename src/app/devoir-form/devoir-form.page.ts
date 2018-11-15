@@ -37,7 +37,7 @@ export class DevoirFormPage implements OnInit {
         itm => {
           this.devoir = itm;
           this.fillForm(this.devoirForm, this.devoir);
-        })
+        }, true)
     }
 
     timestampFromString(devoir: any): number{

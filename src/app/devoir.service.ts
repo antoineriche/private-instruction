@@ -34,17 +34,19 @@ export class DevoirService {
       });
   }
 
-  getDevoir(devoirKey: string, callback) {
+  getDevoir(devoirKey: string, callback, fetchPupil: boolean) {
     return this.ref.child(devoirKey).on('value', (itm) => {
       var devoir = itm.val();
       devoir.key = devoirKey;
-      this.fetchPupil(devoir);
+      if(fetchPupil){
+        this.fetchPupil(devoir);
+      }
       callback(devoir);
     });
   }
 
   getDevoirs(callback) {
-    return this.ref.on('value', (s) => {
+    return this.ref.orderByChild('date').on('value', (s) => {
       var devoirs = snapshotToArray(s);
       for(let i = 0 ; i < devoirs.length ; i++){
         this.fetchPupil(devoirs[i]);
@@ -72,5 +74,18 @@ export class DevoirService {
   deleteDevoir(devoirKey: string, pupilId: string) {
     this.pupilsService.removeDevoirForPupil(pupilId, devoirKey);
     this.ref.child(devoirKey).remove();
+  }
+
+  getNextDevoir(callback) {
+    var devoir = null;
+    var date = new Date().getTime();
+    return this.ref.orderByChild('date').startAt(date).limitToFirst(1).on('value', (s) => {
+      var devoirs = snapshotToArray(s);
+      if(devoirs.length > 0){
+        devoir = devoirs[0];
+        this.fetchPupil(devoir);
+      }
+      callback(devoir);
+    });
   }
 }

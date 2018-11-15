@@ -28,7 +28,7 @@ export class CourseDetailPage implements OnInit {
 
 
   getCourse (courseKey: string) {
-    this.courseService.getCourse(this.courseKey, (itm) => { this.course = itm; } );
+    this.courseService.getCourse(this.courseKey, (itm) => { this.course = itm; }, true );
   }
 
   updateCourseStatus(newStatus: number){

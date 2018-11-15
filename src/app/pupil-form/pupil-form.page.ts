@@ -69,6 +69,11 @@ export class PupilFormPage implements OnInit {
       if(this.pupil.coursesId != undefined){
         ppupil.coursesId = this.pupil.coursesId;
       }
+
+      if(this.pupil.devoirsId != undefined){
+        ppupil.devoirsId = this.pupil.devoirsId;
+      }
+
       this.pupilsService.updatePupil(this.pupilKey, ppupil);
     }
 

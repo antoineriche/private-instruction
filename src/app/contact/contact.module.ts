@@ -12,6 +12,7 @@ import { ContactPage } from './contact.page';
     FormsModule,
     RouterModule.forChild([{ path: '', component: ContactPage }])
   ],
-  declarations: [ContactPage]
+  declarations: [ContactPage],
+  entryComponents: [ ContactPage ]
 })
 export class ContactPageModule {}

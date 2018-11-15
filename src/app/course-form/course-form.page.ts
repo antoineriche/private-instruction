@@ -37,7 +37,7 @@ export class CourseFormPage implements OnInit {
       (itm) => {
         this.course = itm;
         this.fillForm(this.courseForm, this.course);
-      })
+      }, true);
   }
 
   timestampFromString(course: any): number{

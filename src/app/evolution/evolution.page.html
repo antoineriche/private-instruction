@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Evolution</ion-title>
+    <ion-buttons slot="end">
+      <ion-spinner *ngIf="loadPupils" color="warning" name="bubbles"></ion-spinner>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<div class="bar bar-header">
+  <ion-item class="primary-bckg">
+    <ion-icon class="txt-white" name="person" slot="start"></ion-icon>
+    <ion-label color="warning">Pupil</ion-label>
+    <ion-select [(ngModel)]="selectPupils" (ngModelChange)="selectPupil($event)">
+      <ion-select-option *ngFor="let pupil of pupils" value="{{pupil.key}}">{{pupil.firstname}} {{pupil.lastname}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+</div>
+
+<ion-content class="has-header">
+
+  <ion-card>
+    <ion-item>
+        <plotly-plot [data]="graph.data" [layout]="graph.layout" [config]="graph.config"></plotly-plot>
+    </ion-item>
+  </ion-card>
+
+  <ion-card>
+    <ion-item>
+      <ion-label color="primary">Pupil</ion-label>
+      {{selectedPupil ? selectedPupil.firstname + ' ' + selectedPupil.lastname : 'No pupil selected'}}
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">Devoirs</ion-label>
+      {{devoirs ? devoirs.length : 0}}
+    </ion-item>
+  </ion-card>
+
+</ion-content>

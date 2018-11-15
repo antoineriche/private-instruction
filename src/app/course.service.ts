@@ -33,15 +33,18 @@ export class CourseService {
       for(let i = 0 ; i < courses.length ; i++){
         this.fetchPupil(courses[i]);
       }
+      console.log(courses);
       callback(courses);
     });
   }
 
-  getCourse(courseKey: string, callback){
+  getCourse(courseKey: string, callback, fetchPupil: boolean){
     return this.ref.child(courseKey).on('value', (itm) => {
       var course = itm.val();
       course.key = courseKey;
-      this.fetchPupil(course);
+      if(fetchPupil){
+        this.fetchPupil(course);
+      }
       callback(course);
     });
   }

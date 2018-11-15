@@ -14,59 +14,134 @@
 
 <ion-content>
 
-  <ion-card *ngIf="pupil">
+  <div *ngIf="pupil">
 
-    <ion-card-header>
-      <ion-card-title>{{pupil.firstname}} {{pupil.lastname}}</ion-card-title>
-    </ion-card-header>
+    <ion-card>
 
-    <ion-item>
-      <ion-label position="fixed" color="primary">Class level</ion-label>
-      {{pupil.classLevel}}
-    </ion-item>
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+        </ion-thumbnail>
+        <ion-label color="primary">
+          <h1>{{pupilUtils.getFullName(pupil)}}</h1>
+        </ion-label>
+      </ion-item>
 
-    <ion-item>
-      <ion-label position="fixed" color="primary">Courses count</ion-label>
-      {{courseCounter}}
-    </ion-item>
+      <ion-item>
+        <ion-label position="fixed" color="primary">Class level</ion-label>
+        {{pupil.classLevel}}
+      </ion-item>
 
-    <ion-item>
-      <ion-label position="fixed" color="primary">Devoirs count</ion-label>
-      {{devoirCounter}}
-    </ion-item>
+      <ion-item>
+        <ion-label position="fixed" color="primary">Hourly price</ion-label>
+        {{pupil.hourlyPrice}} €
+      </ion-item>
+    </ion-card>
 
-    <ion-item>
-      <ion-label position="fixed" color="primary">Hourly price</ion-label>
-      {{pupil.hourlyPrice}} €
-    </ion-item>
-  </ion-card>
+    <!-- COORDINATES -->
+    <ion-card>
 
-  <ion-card *ngIf="pupil">
-    <ion-item>
-      <ion-label position="fixed" color="primary">Address</ion-label>
-      {{pupil.place.address}}
-      <ion-icon name="globe" color="primary" slot="end"></ion-icon>
-    </ion-item>
+      <ion-item class="primary-bckg">
+        <ion-icon name="home" slot="start"></ion-icon>
+        <ion-label class="txt-white">Coordinates</ion-label>
+        <ion-button ion-button icon-only (click)="this.showCoordinates = !this.showCoordinates">
+          <ion-icon name="more"></ion-icon>
+        </ion-button>
+      </ion-item>
 
-    <ion-item>
-      <ion-label position="fixed" color="primary">Phone</ion-label>
-      {{pupil.phone}}
-      <ion-icon name="call" color="warning" slot="end"></ion-icon>
-    </ion-item>
+      <div *ngIf="this.showCoordinates">
 
-    <ion-item>
-      <ion-label position="fixed" color="primary">Parent phone</ion-label>
-      {{pupil.parentPhone}}
-      <ion-icon name="call" color="warning" slot="end"></ion-icon>
-    </ion-item>
-  </ion-card>
+        <ion-item>
+          <ion-label position="fixed" color="primary">Phone</ion-label>
+          {{pupil.phone}}
+          <ion-icon name="call" color="warning" slot="end"></ion-icon>
+        </ion-item>
 
-  <!-- Map -->
-  <ion-card>
-    <div #map id="map" [hidden]="!pupil"></div>
-    <ion-item>
-      <ion-label position="fixed" color="primary">Distance</ion-label> {{distance}} km
-    </ion-item>
-  </ion-card>
+        <ion-item>
+          <ion-label position="fixed" color="primary">Parent phone</ion-label>
+          {{pupil.parentPhone}}
+          <ion-icon name="call" color="warning" slot="end"></ion-icon>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="fixed" color="primary">Address</ion-label>
+          {{pupil.place.address}}
+          <ion-button ion-button icon-only (click)="showModal()" fill="outline">
+            <ion-icon name="globe"></ion-icon>
+          </ion-button>
+        </ion-item>
+
+      </div>
+
+    </ion-card>
+
+
+    <!-- COURSES -->
+    <ion-card>
+
+      <ion-item class="primary-bckg">
+        <ion-icon name="book" slot="start"></ion-icon>
+        <ion-label class="txt-white">Courses ({{courseCounter}})</ion-label>
+        <ion-button ion-button icon-only (click)="this.showCourses = !this.showCourses">
+          <ion-icon name="more"></ion-icon>
+        </ion-button>
+      </ion-item>
+
+      <div *ngIf="this.showCourses">
+        <ion-card-content>
+
+          <div *ngIf="!courses">
+            No course
+          </div>
+
+          <div *ngIf="courses">
+            <ion-list lines="full">
+              <ion-item *ngFor="let course of courses" align-items-center>
+                <ion-label *ngIf="course">
+                  <p>{{course.date | date:'E. dd MMM, y'}} x {{courseUtils.getFriendlyTime(course.date, course.duration)}}</p>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+          </div>
+        </ion-card-content>
+      </div>
+
+    </ion-card>
+
+
+    <!-- DEVOIRS -->
+    <ion-card>
+
+      <ion-item class="primary-bckg">
+        <ion-icon name="clipboard" slot="start"></ion-icon>
+        <ion-label class="txt-white">Devoirs ({{devoirCounter}})</ion-label>
+        <ion-button ion-button icon-only (click)="this.showDevoirs = !this.showDevoirs">
+          <ion-icon name="more"></ion-icon>
+        </ion-button>
+      </ion-item>
+
+      <div *ngIf="this.showDevoirs">
+        <ion-card-content>
+
+          <div *ngIf="!devoirs">
+            No devoirs
+          </div>
+
+          <div *ngIf="devoirs">
+            <ion-list lines="full">
+              <ion-item *ngFor="let devoir of devoirs" align-items-center>
+                <ion-label *ngIf="devoir">
+                  <p>{{devoir.date | date:'E. dd MMM, y'}}</p>
+                </ion-label>
+                <p>{{devoir.mark}} / {{devoir.maxMark}}</p>
+              </ion-item>
+            </ion-list>
+          </div>
+        </ion-card-content>
+      </div>
+
+    </ion-card>
+
+  </div>
 
 </ion-content>

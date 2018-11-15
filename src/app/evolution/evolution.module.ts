@@ -5,25 +5,25 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { PupilDetailPage } from './pupil-detail.page';
-import { Ionic2RatingModule } from "ionic2-rating";
+import { EvolutionPage } from './evolution.page';
+
+import { PlotlyModule } from 'angular-plotly.js';
 
 const routes: Routes = [
   {
-      path: '',
-      component: PupilDetailPage,
+    path: '',
+    component: EvolutionPage
   }
 ];
 
 @NgModule({
   imports: [
     CommonModule,
+    PlotlyModule,
     FormsModule,
     IonicModule,
-    // ContactPageModule,
     RouterModule.forChild(routes)
   ],
-  exports: [RouterModule],
-  declarations: [PupilDetailPage],
+  declarations: [EvolutionPage]
 })
-export class PupilDetailPageModule {}
+export class EvolutionPageModule {}

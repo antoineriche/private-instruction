@@ -1,0 +1,155 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Bilan</ion-title>
+    <ion-buttons slot="end">
+      <ion-spinner *ngIf="load" color="warning" name="bubbles"></ion-spinner>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- PUPILS -->
+  <ion-card>
+    <ion-item class="primary-bckg">
+      <ion-icon name="people" slot="start" color="warning"></ion-icon>
+      <ion-spinner [hidden]="!pupilLoading" slot="end" class="txt-white" name="bubbles"></ion-spinner>
+      <ion-button ion-button icon-only [hidden]="pupilLoading" (click)="showPupils = !showPupils" slot="end">
+        <ion-icon name="more"></ion-icon>
+      </ion-button>
+      <ion-label class="txt-white">
+        Pupils
+      </ion-label>
+    </ion-item>
+
+    <div [hidden]="!showPupils">
+
+      <ion-item>
+        <ion-label color="primary">Male</ion-label>
+        {{pupilMale}}
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="primary">Female</ion-label>
+        {{pupilFemale}}
+      </ion-item>
+
+    </div>
+
+  </ion-card>
+
+  <!-- COURSES -->
+  <ion-card>
+    <ion-item class="primary-bckg">
+      <ion-icon name="book" slot="start" color="warning"></ion-icon>
+      <ion-spinner [hidden]="!courseLoading" slot="end" class="txt-white" name="bubbles"></ion-spinner>
+      <ion-button ion-button icon-only [hidden]="courseLoading" (click)="this.showCourses = !this.showCourses" slot="end">
+        <ion-icon name="more"></ion-icon>
+      </ion-button>
+      <ion-label class="txt-white">
+        Courses
+      </ion-label>
+    </ion-item>
+
+    <div *ngIf="showCourses">
+
+      <ion-item>
+        <ion-label color="primary">First</ion-label>
+        {{courseFirst | date:'E. dd MMM, y'}}
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="primary">Cancelled</ion-label>
+        {{courseCancelled}}
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="primary">Finished</ion-label>
+        {{courseFinished}}
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="primary">Total</ion-label>
+        {{courseTotal}}
+      </ion-item>
+
+    </div>
+  </ion-card>
+
+  <!-- DEVOIRS -->
+  <ion-card>
+    <ion-item class="primary-bckg">
+      <ion-icon name="clipboard" slot="start" color="warning"></ion-icon>
+      <ion-spinner [hidden]="!devoirLoading" slot="end" class="txt-white" name="bubbles"></ion-spinner>
+      <ion-button ion-button icon-only [hidden]="devoirLoading" (click)="showDevoirs = !showDevoirs" slot="end">
+        <ion-icon name="more"></ion-icon>
+      </ion-button>
+      <ion-label class="txt-white">
+        Devoirs
+      </ion-label>
+    </ion-item>
+
+    <div *ngIf="showDevoirs">
+
+      <ion-item>
+        <ion-label color="primary">Best mark</ion-label>
+        {{devoirBestMark}}
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="primary">Worst mark</ion-label>
+        {{devoirWorstMark}}
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="primary">Finished</ion-label>
+        {{devoirFinished}}
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="primary">Total</ion-label>
+        {{devoirTotal}}
+      </ion-item>
+
+    </div>
+  </ion-card>
+
+
+  <!-- MONEY -->
+  <ion-card>
+    <ion-item class="primary-bckg">
+      <ion-icon name="logo-euro" slot="start" color="warning"></ion-icon>
+      <ion-spinner [hidden]="!moneyLoading" slot="end" class="txt-white" name="bubbles"></ion-spinner>
+      <ion-button ion-button icon-only [hidden]="moneyLoading" (click)="showMoney = !showMoney" slot="end">
+        <ion-icon name="more"></ion-icon>
+      </ion-button>
+      <ion-label class="txt-white">
+        Money
+      </ion-label>
+    </ion-item>
+
+    <div *ngIf="showMoney">
+
+      <ion-item>
+        <ion-label color="primary">Waiting for payment</ion-label>
+        {{moneyWaiting}} €
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="primary">Paid</ion-label>
+        {{moneyPaid}} €
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="primary">Total</ion-label>
+        {{moneyTotal}} €
+      </ion-item>
+
+    </div>
+  </ion-card>
+
+
+</ion-content>

@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 
 import { ActivatedRoute, Router  } from '@angular/router';
 
 import { PupilsService } from '../pupils.service';
+import { CourseService } from '../course.service';
+import { DevoirService } from '../devoir.service';
 
-//FOR maps
-import { ViewChild, ElementRef } from '@angular/core';
-import { NavController, Platform, ActionSheetController, AlertController } from '@ionic/angular';
+import { NavController, Platform, ActionSheetController, AlertController, ModalController } from '@ionic/angular';
 
-import { Pupil } from '../beans/pupil';
+import { Pupil, PupilUtils } from '../beans/pupil';
+import { Devoir } from '../beans/devoir';
+import { Course, CourseUtils } from '../beans/course';
 
+import { TestodalPage } from '../testodal/testodal.page';
 
-declare var google;
 
 @Component({
   selector: 'app-pupil-detail',
@@ -21,16 +23,16 @@ declare var google;
 export class PupilDetailPage implements OnInit {
 
   pupil: Pupil;
-  distance = "?"
+  courses: Course[];
+  devoirs: Devoir[];
   pupilKey: string;
-  @ViewChild('map') mapElement: ElementRef;
-  map: any;
   courseCounter: number;
   devoirCounter: number;
 
-  constructor(public pupilsService: PupilsService, public router: Router,
-              private route: ActivatedRoute, public actionSheetController: ActionSheetController,
-              public alertController: AlertController) { }
+  constructor(public pupilsService: PupilsService, public courseService: CourseService, public devoirService: DevoirService,
+              public router: Router, private route: ActivatedRoute, public actionSheetController: ActionSheetController,
+              public alertController: AlertController, private courseUtils: CourseUtils,
+              private modalCtrl:ModalController, private pupilUtils: PupilUtils) { }
 
   async presentAlertConfirm() {
     const alert = await this.alertController.create({
@@ -88,44 +90,62 @@ export class PupilDetailPage implements OnInit {
     this.pupilsService.getPupil(this.pupilKey, (itm) => {
       this.pupil = itm;
 
-      console.log(this.pupil);
+      if(this.pupil.coursesId){
+        this.courses = [];
+        this.getCourses(this.pupil.coursesId);
+      }
+
+      if(this.pupil.devoirsId){
+        this.devoirs = [];
+        this.getDevoirs(this.pupil.devoirsId);
+      }
+
+      console.log(this.pupil)
+
       this.courseCounter = this.pupil.coursesId != undefined ? Object.keys(this.pupil.coursesId).length : 0;
       this.devoirCounter = this.pupil.devoirsId != undefined ? Object.keys(this.pupil.devoirsId).length : 0;
-
-
-      var home = new google.maps.LatLng(44.860153, -0.558017);
-      var pupilPlace = new google.maps.LatLng(this.pupil.place.latitude, this.pupil.place.longitude);
-
-      this.map = new google.maps.Map(this.mapElement.nativeElement, {
-          zoom: 10,
-          mapTypeControl: false,          // (true? show plan/satellite buttons)
-          disableDefaultUI: true,         // (true? hide zoom buttons)
-          gestureHandling: 'none',
-          center: pupilPlace,
-          zoomControl: true
-      });
-
-      // this.distance = google.maps.geometry.spherical.computeDistanceBetween (
-      //   latLngA,
-      //   latLngB);
-
-      this.addMarker(pupilPlace, this.map, '');
-      this.addMarker(home, this.map, 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png');
     });
   }
 
-  // Adds a marker to the map.
-  addMarker(location, map, icon) {
-    var marker = new google.maps.Marker({
-      position: location,
-      map: map,
-      icon: icon
-    });
+  getCourses(coursesId){
+    Object.keys(coursesId).forEach(
+      courseId => {
+        this.courseService.getCourse(courseId,
+        (course) => {
+          this.courses.push(course);
+          this.sortArrayByDate(this.courses, 'date');
+        }, false);
+      });
+  }
+
+  getDevoirs(devoirsId){
+    Object.keys(devoirsId).forEach(
+      devoirId => {
+        this.devoirService.getDevoir(devoirId,
+        (devoir) => {
+          this.devoirs.push(devoir);
+          this.sortArrayByDate(this.devoirs, 'date');
+        }, false);
+      });
+  }
+
+  sortArrayByDate(array: any[], criteria: string) {
+    array.sort(function (a, b) { return ('' + a[criteria]).localeCompare(b[criteria]); });
+    array = array.reverse();
   }
 
   ngOnInit() {
     this.pupilKey = this.route.snapshot.paramMap.get('key');
     this.getPupil(this.pupilKey);
+  }
+
+  async showModal(){
+    const modal = await this.modalCtrl.create({
+     component: TestodalPage,
+     componentProps: { pupil: this.pupil }
+   });
+
+   return await modal.present();
   }
 
 }

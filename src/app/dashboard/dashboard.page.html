@@ -15,7 +15,7 @@
   <!-- NEXT COURSE -->
   <ion-card>
 
-    <ion-item *ngIf="nextCourse">
+    <ion-item>
       <ion-item *ngIf="nextCourseCountDown" slot="end">
         <ion-icon slot="end" name="time"></ion-icon>
         <ion-label>
@@ -26,8 +26,33 @@
         <ion-text color="primary">
           <h1>Next course</h1>
         </ion-text>
-        <p>{{nextCourse.date | date:'E. dd MMM, y'}}</p>
-        <p>{{nextCourse.pupil ? pupilUtils.getFullName(nextCourse.pupil) : nextCourse.pupilId}}</p>
+        <div *ngIf="nextCourse">
+          <p>{{nextCourse.date | date:'E. dd MMM, y'}}</p>
+          <p>{{nextCourse.pupil ? pupilUtils.getFullName(nextCourse.pupil) : nextCourse.pupilId}}</p>
+        </div>
+        <div *ngIf="!nextCourse">
+          <p>No foreseen course</p>
+        </div>
+      </ion-label>
+    </ion-item>
+
+  </ion-card>
+
+  <!-- NEXT DEVOIR -->
+  <ion-card>
+
+    <ion-item *ngIf="nextDevoir">
+      <ion-label text-wrap>
+        <ion-text color="primary">
+          <h1>Next devoir</h1>
+        </ion-text>
+        <div *ngIf="nextDevoir">
+          <p>{{nextDevoir.date | date:'E. dd MMM, y'}}</p>
+          <p>{{nextDevoir.pupil ? pupilUtils.getFullName(nextDevoir.pupil) : nextDevoir.pupilId}}</p>
+        </div>
+        <div *ngIf="!nextDevoir">
+          <p>No foreseen devoir</p>
+        </div>
       </ion-label>
     </ion-item>
 
